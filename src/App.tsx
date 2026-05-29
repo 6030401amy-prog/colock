@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Clock,
   RotateCcw,
@@ -278,7 +278,7 @@ export default function App() {
   const isDay = totalMinutes % 1440 >= 360 && totalMinutes % 1440 < 1080;
   const h24 = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
-  const isPM = h24 >= 12;
+  // const isPM = h24 >= 12;
   const displayH = h24 % 12 === 0 ? 12 : h24 % 12;
   const mTens = Math.floor(m / 10);
   const mOnes = m % 10;
