@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import {
   Clock,
   RotateCcw,
@@ -13,163 +13,166 @@ import {
   Trash2,
   Languages,
   Printer,
-} from 'lucide-react';
+  Volume2 // 匯入喇叭圖示
+} from "lucide-react";
 
 // --- 雙語翻譯字典 ---
 const T: any = {
   zh: {
-    title: '互動時鐘練習',
-    explore: '自由探索',
-    step: '逐步學習',
-    practice: '挑戰模式',
-    history: '練習紀錄',
-    printTab: '列印表單',
-    digiClock: '數字時鐘',
-    hide: '隱藏',
-    show: '顯示',
-    hiddenState: '數字時鐘已隱藏',
-    hiddenHint: '點擊上方的「顯示」來操作數字面版',
-    am: '上午',
-    pm: '下午',
-    ptr1: '指針',
-    ptr2: '設定',
-    link: '連 動',
-    trail: '軌 跡',
-    hourHand: '時 針',
-    minHand: '分 針',
-    secHand: '秒 針',
-    scale1: '刻度',
-    scale2: '效果',
-    ticks: '刻 度',
-    numbers: '數 字',
-    colors: '鋪 色',
-    extend: '延伸指針',
-    by5: '5個一數',
-    all: '全部顯示',
-    draw1: '畫筆',
-    draw2: '工具',
-    mouse: '滑鼠',
-    pen: '畫筆',
-    line: '直線',
-    erase: '部分刪除',
-    clearAll: '全部刪除',
-    hintMouse: '💡 提示：按住並旋轉鐘面來撥動時間！',
-    hintDraw: '💡 提示：您現在可以直接在鐘面上畫畫喔！',
-    backToNow: '回到現在時間',
-    setTo: '請將時鐘轉到：',
-    check: '對答案',
-    next: '換一題',
-    step1: '1. 認識整點',
-    step2: '2. 認識半點',
-    step3: '3. 幾點幾分',
-    correct: '太棒了！答對囉！',
-    wrong: '哎呀，再看仔細一點喔！',
-    langBtn: 'English',
-    stepTitle: '漸進式練習',
-    unitTitle: '挑戰單元',
-    unit1: '整點',
-    unit2: '半點',
-    unit3: '幾點幾分',
-    minBy5: '5分一數',
-    minMixed: '混和練習',
-    unit3_5: '幾點幾分 (5分一數)',
-    unit3_mixed: '幾點幾分 (混和練習)',
-    noRecord: '目前還沒有紀錄喔！趕快去挑戰看看吧！',
-    clearRecord: '清除全部紀錄',
-    correctRecord: '答對',
-    wrongRecord: '答錯',
-    printTitle: '時鐘練習學習單',
-    studentClass: '班級',
-    studentName: '姓名',
-    studentScore: '分數',
-    selectUnitsMsg: '請選擇要列印的單元 (可多選)：',
-    questionCount: '列印題數：',
-    generatePrint: '產生並列印',
-    q6: '6 題',
-    q9: '9 題',
-    q12: '12 題',
-    alertNoUnit: '請至少選擇一個單元！',
-    correctAns: '正確：',
+    title: "互動時鐘練習",
+    explore: "自由探索",
+    step: "逐步學習",
+    practice: "挑戰模式",
+    history: "練習紀錄",
+    printTab: "列印表單",
+    digiClock: "數字時鐘",
+    hide: "隱藏",
+    show: "顯示",
+    hiddenState: "數字時鐘已隱藏",
+    hiddenHint: "點擊上方的「顯示」來操作數字面版",
+    am: "上午",
+    pm: "下午",
+    ptr1: "指針",
+    ptr2: "設定",
+    link: "連 動",
+    trail: "軌 跡",
+    hourHand: "時 針",
+    minHand: "分 針",
+    secHand: "秒 針",
+    scale1: "刻度",
+    scale2: "效果",
+    ticks: "刻 度",
+    numbers: "數 字",
+    colors: "鋪 色",
+    extend: "延伸指針",
+    by5: "5個一數",
+    all: "全部顯示",
+    draw1: "畫筆",
+    draw2: "工具",
+    mouse: "滑鼠",
+    pen: "畫筆",
+    line: "直線",
+    erase: "部分刪除",
+    clearAll: "全部刪除",
+    hintMouse: "💡 提示：按住並旋轉鐘面來撥動時間！",
+    hintDraw: "💡 提示：您現在可以直接在鐘面上畫畫喔！",
+    backToNow: "回到現在時間",
+    setTo: "請將時鐘轉到：",
+    check: "對答案",
+    next: "換一題",
+    step1: "1. 認識整點",
+    step2: "2. 認識半點",
+    step3: "3. 幾點幾分",
+    correct: "太棒了！答對囉！",
+    wrong: "哎呀，再看仔細一點喔！",
+    langBtn: "English",
+    stepTitle: "漸進式練習",
+    unitTitle: "挑戰單元",
+    unit1: "整點",
+    unit2: "半點",
+    unit3: "幾點幾分",
+    minBy5: "5分一數",
+    minMixed: "混和練習",
+    unit3_5: "幾點幾分 (5分一數)",
+    unit3_mixed: "幾點幾分 (混和練習)",
+    noRecord: "目前還沒有紀錄喔！趕快去挑戰看看吧！",
+    clearRecord: "清除全部紀錄",
+    correctRecord: "答對",
+    wrongRecord: "答錯",
+    printTitle: "時鐘練習學習單",
+    studentClass: "班級",
+    studentName: "姓名",
+    studentScore: "分數",
+    selectUnitsMsg: "請選擇要列印的單元 (可多選)：",
+    questionCount: "列印題數：",
+    generatePrint: "產生並列印",
+    q6: "6 題",
+    q9: "9 題",
+    q12: "12 題",
+    alertNoUnit: "請至少選擇一個單元！",
+    correctAns: "正確：",
+    readClock: "聽指針時間",
   },
   en: {
-    title: 'Interactive Clock',
-    explore: 'Explore',
-    step: 'Step-by-Step',
-    practice: 'Challenge',
-    history: 'Records',
-    printTab: 'Print Worksheet',
-    digiClock: 'Digital Clock',
-    hide: 'Hide',
-    show: 'Show',
-    hiddenState: 'Clock Hidden',
+    title: "Interactive Clock",
+    explore: "Explore",
+    step: "Step-by-Step",
+    practice: "Challenge",
+    history: "Records",
+    printTab: "Print Worksheet",
+    digiClock: "Digital Clock",
+    hide: "Hide",
+    show: "Show",
+    hiddenState: "Clock Hidden",
     hiddenHint: "Click 'Show' to use the digital panel",
-    am: 'AM',
-    pm: 'PM',
-    ptr1: 'Hands',
-    ptr2: 'Setup',
-    link: 'Linked',
-    trail: 'Trail',
-    hourHand: 'Hour',
-    minHand: 'Minute',
-    secHand: 'Second',
-    scale1: 'Scale',
-    scale2: 'Effects',
-    ticks: 'Ticks',
-    numbers: 'Numbers',
-    colors: 'Colors',
-    extend: 'Extend',
-    by5: 'By 5s',
-    all: 'All',
-    draw1: 'Draw',
-    draw2: 'Tools',
-    mouse: 'Mouse',
-    pen: 'Pen',
-    line: 'Line',
-    erase: 'Erase',
-    clearAll: 'Clear All',
-    hintMouse: '💡 Hint: Drag to rotate the clock hands!',
-    hintDraw: '💡 Hint: You can draw on the clock now!',
-    backToNow: 'Current Time',
-    setTo: 'Please set the clock to:',
-    check: 'Check Answer',
-    next: 'Next Question',
+    am: "AM",
+    pm: "PM",
+    ptr1: "Hands",
+    ptr2: "Setup",
+    link: "Linked",
+    trail: "Trail",
+    hourHand: "Hour",
+    minHand: "Minute",
+    secHand: "Second",
+    scale1: "Scale",
+    scale2: "Effects",
+    ticks: "Ticks",
+    numbers: "Numbers",
+    colors: "Colors",
+    extend: "Extend",
+    by5: "By 5s",
+    all: "All",
+    draw1: "Draw",
+    draw2: "Tools",
+    mouse: "Mouse",
+    pen: "Pen",
+    line: "Line",
+    erase: "Erase",
+    clearAll: "Clear All",
+    hintMouse: "💡 Hint: Drag to rotate the clock hands!",
+    hintDraw: "💡 Hint: You can draw on the clock now!",
+    backToNow: "Current Time",
+    setTo: "Please set the clock to:",
+    check: "Check Answer",
+    next: "Next Question",
     step1: "1. Learn O'clock",
-    step2: '2. Learn Half Past',
-    step3: '3. Learn Minutes',
-    correct: 'Great job!',
-    wrong: 'Oops! Try again.',
-    langBtn: '中文',
-    stepTitle: 'Step-by-step Practice',
-    unitTitle: 'Challenge Unit',
+    step2: "2. Learn Half Past",
+    step3: "3. Learn Minutes",
+    correct: "Great job!",
+    wrong: "Oops! Try again.",
+    langBtn: "中文",
+    stepTitle: "Step-by-step Practice",
+    unitTitle: "Challenge Unit",
     unit1: "O'clock",
-    unit2: 'Half Past',
-    unit3: 'Minutes',
-    minBy5: '5-Min Intervals',
-    minMixed: 'Mixed Minutes',
-    unit3_5: 'Minutes (By 5s)',
-    unit3_mixed: 'Minutes (Mixed)',
-    noRecord: 'No records yet! Go challenge yourself!',
-    clearRecord: 'Clear All Records',
-    correctRecord: 'Correct',
-    wrongRecord: 'Wrong',
-    printTitle: 'Clock Practice Worksheet',
-    studentClass: 'Class',
-    studentName: 'Name',
-    studentScore: 'Score',
-    selectUnitsMsg: 'Select units to print (multiple allowed):',
-    questionCount: 'Number of questions:',
-    generatePrint: 'Generate & Print',
-    q6: '6 Questions',
-    q9: '9 Questions',
-    q12: '12 Questions',
-    alertNoUnit: 'Please select at least one unit!',
-    correctAns: 'Correct: ',
+    unit2: "Half Past",
+    unit3: "Minutes",
+    minBy5: "5-Min Intervals",
+    minMixed: "Mixed Minutes",
+    unit3_5: "Minutes (By 5s)",
+    unit3_mixed: "Minutes (Mixed)",
+    noRecord: "No records yet! Go challenge yourself!",
+    clearRecord: "Clear All Records",
+    correctRecord: "Correct",
+    wrongRecord: "Wrong",
+    printTitle: "Clock Practice Worksheet",
+    studentClass: "Class",
+    studentName: "Name",
+    studentScore: "Score",
+    selectUnitsMsg: "Select units to print (multiple allowed):",
+    questionCount: "Number of questions:",
+    generatePrint: "Generate & Print",
+    q6: "6 Questions",
+    q9: "9 Questions",
+    q12: "12 Questions",
+    alertNoUnit: "Please select at least one unit!",
+    correctAns: "Correct: ",
+    readClock: "Read Hands",
   },
 };
 
 export default function App() {
   const [totalMinutes, setTotalMinutes] = useState<number>(10 * 60 + 10);
-  const [mode, setMode] = useState<string>('explore');
+  const [mode, setMode] = useState<string>("explore");
   const [targetMinutes, setTargetMinutes] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<boolean | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -177,14 +180,14 @@ export default function App() {
 
   const [records, setRecords] = useState<any[]>([]);
 
-  const [lang, setLang] = useState<string>('zh');
-  const [stepLevel, setStepLevel] = useState<string>('oclock');
-  const [practiceLevel, setPracticeLevel] = useState<string>('oclock');
+  const [lang, setLang] = useState<string>("zh");
+  const [stepLevel, setStepLevel] = useState<string>("oclock");
+  const [practiceLevel, setPracticeLevel] = useState<string>("oclock");
 
-  const [stepMinMode, setStepMinMode] = useState<string>('by5');
-  const [pracMinMode, setPracMinMode] = useState<string>('by5');
+  const [stepMinMode, setStepMinMode] = useState<string>("by5");
+  const [pracMinMode, setPracMinMode] = useState<string>("by5");
 
-  const [printUnits, setPrintUnits] = useState<string[]>(['oclock']);
+  const [printUnits, setPrintUnits] = useState<string[]>(["oclock"]);
   const [printCount, setPrintCount] = useState<number>(12);
 
   const [settings, setSettings] = useState({
@@ -197,39 +200,37 @@ export default function App() {
   const [seconds, setSeconds] = useState<number>(0);
   const [dragTarget, setDragTarget] = useState<string | null>(null);
   const [trailStartAngle, setTrailStartAngle] = useState<number | null>(null);
-  const [trailCurrentAngle, setTrailCurrentAngle] = useState<number | null>(
-    null
-  );
+  const [trailCurrentAngle, setTrailCurrentAngle] = useState<number | null>(null);
   const [trailAccumulated, setTrailAccumulated] = useState<number>(0);
 
   const [scaleSettings, setScaleSettings] = useState({
     showTicks: true,
     showMinuteNumbers: false,
-    minuteNumbersMode: 'by5',
+    minuteNumbersMode: "by5",
     showColorFill: false,
     extendHands: false,
   });
 
-  const [drawMode, setDrawMode] = useState<string>('mouse');
-  const [drawColor, setDrawColor] = useState<string>('#ef4444');
+  const [drawMode, setDrawMode] = useState<string>("mouse");
+  const [drawColor, setDrawColor] = useState<string>("#ef4444");
   const [drawings, setDrawings] = useState<any[]>([]);
   const [currentDrawing, setCurrentDrawing] = useState<any>(null);
   const drawColors = [
-    '#ef4444',
-    '#f97316',
-    '#eab308',
-    '#22c55e',
-    '#0ea5e9',
-    '#a855f7',
+    "#ef4444",
+    "#f97316",
+    "#eab308",
+    "#22c55e",
+    "#0ea5e9",
+    "#a855f7",
   ];
 
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    if (!document.getElementById('tailwind-cdn')) {
-      const script = document.createElement('script');
-      script.id = 'tailwind-cdn';
-      script.src = 'https://cdn.tailwindcss.com';
+    if (!document.getElementById("tailwind-cdn") && typeof document !== "undefined") {
+      const script = document.createElement("script");
+      script.id = "tailwind-cdn";
+      script.src = "https://cdn.tailwindcss.com";
       document.head.appendChild(script);
     }
     const now = new Date();
@@ -238,23 +239,23 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (mode === 'practice') {
+    if (mode === "practice") {
       generatePracticeQuestion();
-      if (practiceLevel === 'minute') {
+      if (practiceLevel === "minute") {
         setScaleSettings((s) => ({
           ...s,
           showMinuteNumbers: true,
-          minuteNumbersMode: 'all',
+          minuteNumbersMode: "all",
           extendHands: true,
         }));
       }
-    } else if (mode === 'step') {
+    } else if (mode === "step") {
       generateStepQuestion(stepLevel);
-      if (stepLevel === 'minute') {
+      if (stepLevel === "minute") {
         setScaleSettings((s) => ({
           ...s,
           showMinuteNumbers: true,
-          minuteNumbersMode: 'all',
+          minuteNumbersMode: "all",
           extendHands: true,
         }));
       }
@@ -262,39 +263,38 @@ export default function App() {
   }, [mode, stepLevel, practiceLevel, stepMinMode, pracMinMode]);
 
   const getDigitalTime = (mins: number | null, currentLang: string) => {
-    if (mins === null) return { ampm: '', time: '' };
+    if (mins === null) return { ampm: "", time: "" };
     const validMins = ((mins % 1440) + 1440) % 1440;
     const h = Math.floor(validMins / 60);
     const m = validMins % 60;
     const ampm = h < 12 ? T[currentLang].am : T[currentLang].pm;
     const displayH = h % 12 === 0 ? 12 : h % 12;
-    const displayM = m.toString().padStart(2, '0');
+    const displayM = m.toString().padStart(2, "0");
     return {
       ampm,
-      time: `${displayH.toString().padStart(2, '0')}:${displayM}`,
+      time: `${displayH.toString().padStart(2, "0")}:${displayM}`,
     };
   };
 
   const isDay = totalMinutes % 1440 >= 360 && totalMinutes % 1440 < 1080;
   const h24 = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
-  // const isPM = h24 >= 12;
   const displayH = h24 % 12 === 0 ? 12 : h24 % 12;
   const mTens = Math.floor(m / 10);
   const mOnes = m % 10;
 
   const adjustTime = (amount: number) => {
     setTotalMinutes((prev) => (((prev + amount) % 1440) + 1440) % 1440);
-    if (mode === 'practice' || mode === 'step') setFeedback(null);
+    if (mode === "practice" || mode === "step") setFeedback(null);
   };
 
   const generatePracticeQuestion = () => {
     const h = Math.floor(Math.random() * 24);
     let randomM = 0;
-    if (practiceLevel === 'half') {
+    if (practiceLevel === "half") {
       randomM = 30;
-    } else if (practiceLevel === 'minute') {
-      if (pracMinMode === 'by5') {
+    } else if (practiceLevel === "minute") {
+      if (pracMinMode === "by5") {
         const options = [5, 10, 15, 20, 25, 35, 40, 45, 50, 55];
         randomM = options[Math.floor(Math.random() * options.length)];
       } else {
@@ -310,10 +310,10 @@ export default function App() {
   const generateStepQuestion = (level: string) => {
     const h = Math.floor(Math.random() * 12);
     let randomM = 0;
-    if (level === 'half') {
+    if (level === "half") {
       randomM = 30;
-    } else if (level === 'minute') {
-      if (stepMinMode === 'by5') {
+    } else if (level === "minute") {
+      if (stepMinMode === "by5") {
         const options = [5, 10, 15, 20, 25, 35, 40, 45, 50, 55];
         randomM = options[Math.floor(Math.random() * options.length)];
       } else {
@@ -336,8 +336,8 @@ export default function App() {
       {
         id: Date.now(),
         mode: mode,
-        level: mode === 'step' ? stepLevel : practiceLevel,
-        subLevel: mode === 'step' ? stepMinMode : pracMinMode,
+        level: mode === "step" ? stepLevel : practiceLevel,
+        subLevel: mode === "step" ? stepMinMode : pracMinMode,
         targetMins: targetMinutes,
         userMins: totalMinutes,
         isCorrect: isCorrect,
@@ -352,6 +352,54 @@ export default function App() {
     setSeconds(now.getSeconds());
   };
 
+  // --- 語音報時邏輯 ---
+  const speakTime = (timeInMinutes: number = totalMinutes) => {
+    if (!('speechSynthesis' in window)) {
+      alert("您的瀏覽器不支援語音功能喔！");
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const validMins = ((timeInMinutes % 1440) + 1440) % 1440;
+    const h = Math.floor(validMins / 60);
+    const m = validMins % 60;
+    const displayH = h % 12 === 0 ? 12 : h % 12;
+
+    let textToSpeak = "";
+
+    if (lang === "zh") {
+      const hText = displayH === 2 ? "二" : displayH.toString();
+      let mText = "";
+      if (m === 0) {
+        textToSpeak = `${hText}時`;
+      } else {
+        mText = m.toString();
+        textToSpeak = `${hText}時${mText}分`;
+      }
+    } else {
+      let mText = "";
+      if (m === 0) {
+        mText = "o'clock";
+      } else if (m < 10) {
+        mText = `oh ${m}`;
+      } else {
+        mText = m.toString();
+      }
+      textToSpeak = `${displayH} ${mText}`;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    if (lang === "zh") {
+      utterance.lang = "zh-TW";
+      utterance.rate = 0.85;
+    } else {
+      utterance.lang = "en-US";
+      utterance.rate = 0.85;
+    }
+    window.speechSynthesis.speak(utterance);
+  };
+
   const togglePrintUnit = (unit: string) => {
     setPrintUnits((prev) =>
       prev.includes(unit) ? prev.filter((u) => u !== unit) : [...prev, unit]
@@ -362,7 +410,7 @@ export default function App() {
     const totalMins = h * 60 + m;
     const hAngle = ((totalMins / 60) % 12) * 30;
     const mAngle = m * 6;
-    let ticks = '';
+    let ticks = "";
     for (let i = 0; i < 60; i++) {
       const angle = (i * 6 * Math.PI) / 180;
       const isHour = i % 5 === 0;
@@ -372,11 +420,11 @@ export default function App() {
       const x2 = 100 + 98 * Math.sin(angle);
       const y2 = 100 - 98 * Math.cos(angle);
       ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${
-        isHour ? '#000' : '#777'
+        isHour ? "#000" : "#777"
       }" stroke-width="${isHour ? 3 : 1}" />`;
     }
 
-    let numbers = '';
+    let numbers = "";
     for (let i = 1; i <= 12; i++) {
       const angle = (i * 30 * Math.PI) / 180;
       const x = 100 + 66 * Math.sin(angle);
@@ -386,8 +434,8 @@ export default function App() {
       }" font-size="20" font-weight="bold" font-family="sans-serif" text-anchor="middle" dominant-baseline="middle" fill="#000">${i}</text>`;
     }
 
-    let minuteHints = '';
-    if (unit === 'minute_by5') {
+    let minuteHints = "";
+    if (unit === "minute_by5") {
       for (let i = 0; i < 60; i += 5) {
         const angle = (i * 6 * Math.PI) / 180;
         const x = 100 + 112 * Math.sin(angle);
@@ -396,7 +444,7 @@ export default function App() {
           y + 3
         }" font-size="12" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${i}</text>`;
       }
-    } else if (unit === 'minute_mixed') {
+    } else if (unit === "minute_mixed") {
       for (let i = 0; i < 60; i++) {
         const angle = (i * 6 * Math.PI) / 180;
         const isFive = i % 5 === 0;
@@ -405,8 +453,8 @@ export default function App() {
         const y = 100 - rText * Math.cos(angle);
 
         const fontSize = isFive ? 12 : 7.5;
-        const fontWeight = isFive ? 'bold' : 'normal';
-        const fill = isFive ? '#111' : '#666';
+        const fontWeight = isFive ? "bold" : "normal";
+        const fill = isFive ? "#111" : "#666";
 
         minuteHints += `<text x="${x}" y="${
           y + (isFive ? 3 : 2)
@@ -415,9 +463,9 @@ export default function App() {
     }
 
     const viewBox =
-      unit === 'minute_by5' || unit === 'minute_mixed'
-        ? '-25 -25 250 250'
-        : '0 0 200 200';
+      unit === "minute_by5" || unit === "minute_mixed"
+        ? "-25 -25 250 250"
+        : "0 0 200 200";
 
     return `
       <svg viewBox="${viewBox}" width="100%" height="100%" style="overflow: visible;">
@@ -442,12 +490,12 @@ export default function App() {
       const unit = printUnits[Math.floor(Math.random() * printUnits.length)];
       const h = Math.floor(Math.random() * 12);
       let m = 0;
-      if (unit === 'half') {
+      if (unit === "half") {
         m = 30;
-      } else if (unit === 'minute_by5') {
+      } else if (unit === "minute_by5") {
         const options = [5, 10, 15, 20, 25, 35, 40, 45, 50, 55];
         m = options[Math.floor(Math.random() * options.length)];
-      } else if (unit === 'minute_mixed') {
+      } else if (unit === "minute_mixed") {
         do {
           m = Math.floor(Math.random() * 60);
         } while (m === 0 || m === 30);
@@ -455,8 +503,8 @@ export default function App() {
       questions.push({ h: h === 0 ? 12 : h, m: m, unit: unit });
     }
 
-    const win = window.open('', '_blank');
-    if (!win) return alert('請允許彈出視窗進行列印喔！');
+    const win = window.open("", "_blank");
+    if (!win) return alert("請允許彈出視窗進行列印喔！");
 
     const html = `
       <!DOCTYPE html>
@@ -491,7 +539,7 @@ export default function App() {
                   font-size: 32px;      /* 放大冒號 */
                   font-weight: bold; 
                   line-height: 1;       /* 確保不會因為行高偏移 */
-                  padding-bottom: 6px;  /* 微調垂直位置，讓它視覺上在底線中間 */
+                  padding-bottom: 4px;  /* 微調垂直位置，讓它視覺上在底線中間 */
               }
               
               @media print {
@@ -530,7 +578,7 @@ export default function App() {
                   </div>
               `
                 )
-                .join('')}
+                .join("")}
           </div>
           <script>
               window.onload = function() { setTimeout(window.print, 500); }
@@ -557,7 +605,7 @@ export default function App() {
   const eraseAt = (x: number, y: number) => {
     setDrawings((prev) =>
       prev.filter((d) => {
-        if (d.type === 'pencil') {
+        if (d.type === "pencil") {
           for (let i = 0; i < d.points.length - 1; i++) {
             if (distToSegment({ x, y }, d.points[i], d.points[i + 1]) < 15)
               return false;
@@ -569,7 +617,7 @@ export default function App() {
             return false;
           return true;
         }
-        if (d.type === 'line') {
+        if (d.type === "line") {
           return distToSegment({ x, y }, d.start, d.end) >= 15;
         }
         return true;
@@ -589,24 +637,24 @@ export default function App() {
     const drawX = (clientX - svgRect.left) * svgScale;
     const drawY = (clientY - svgRect.top) * svgScale;
 
-    if (drawMode !== 'mouse') {
+    if (drawMode !== "mouse") {
       setIsDragging(true);
-      if (drawMode === 'pencil') {
+      if (drawMode === "pencil") {
         setCurrentDrawing({
           id: Date.now(),
-          type: 'pencil',
+          type: "pencil",
           color: drawColor,
           points: [{ x: drawX, y: drawY }],
         });
-      } else if (drawMode === 'line') {
+      } else if (drawMode === "line") {
         setCurrentDrawing({
           id: Date.now(),
-          type: 'line',
+          type: "line",
           color: drawColor,
           start: { x: drawX, y: drawY },
           end: { x: drawX, y: drawY },
         });
-      } else if (drawMode === 'eraser') {
+      } else if (drawMode === "eraser") {
         eraseAt(drawX, drawY);
       }
       return;
@@ -617,10 +665,41 @@ export default function App() {
     const svgY = drawY - 180;
     const distance = Math.sqrt(svgX * svgX + svgY * svgY);
 
-    let target = 'minute';
-    if (settings.showSecond && distance > 105) target = 'second';
-    else if (settings.showMinute && distance > 65) target = 'minute';
-    else if (settings.showHour && distance <= 65) target = 'hour';
+    const hourAngleDeg = settings.linked ? ((totalMinutes / 60) % 12) * 30 : (Math.floor(totalMinutes / 60) % 12) * 30;
+    const minuteAngleDeg = (totalMinutes % 60) * 6;
+    const secondAngleDeg = seconds * 6;
+
+    const hA = hourAngleDeg * Math.PI / 180;
+    const wH = { x: 80 * Math.sin(hA), y: -80 * Math.cos(hA) };
+    const distHour = distToSegment({x: svgX, y: svgY}, {x:0, y:0}, wH);
+
+    const mA = minuteAngleDeg * Math.PI / 180;
+    const wM = { x: 120 * Math.sin(mA), y: -120 * Math.cos(mA) };
+    const distMinute = distToSegment({x: svgX, y: svgY}, {x:0, y:0}, wM);
+
+    const sA = secondAngleDeg * Math.PI / 180;
+    const wS = { x: 135 * Math.sin(sA), y: -135 * Math.cos(sA) };
+    const distSecond = distToSegment({x: svgX, y: svgY}, {x:0, y:0}, wS);
+
+    let target = 'minute'; 
+
+    if (settings.showSecond && distSecond < 20 && distance > 100) {
+        target = 'second';
+    } else if (settings.showHour && settings.showMinute) {
+        if (distHour < 30 && distMinute < 30) {
+            target = distance <= 75 ? 'hour' : 'minute';
+        } else if (distHour < 30) {
+            target = 'hour';
+        } else if (distMinute < 40) {
+            target = 'minute';
+        } else {
+            target = distance > 70 ? 'minute' : 'hour';
+        }
+    } else if (settings.showHour) {
+        target = 'hour';
+    } else if (settings.showMinute) {
+        target = 'minute';
+    }
 
     setDragTarget(target);
 
@@ -632,7 +711,7 @@ export default function App() {
     setTrailAccumulated(0);
 
     handlePointerMove(e, target, angle);
-    if (mode === 'practice' || mode === 'step') setFeedback(null);
+    if (mode === "practice" || mode === "step") setFeedback(null);
   };
 
   const handlePointerMove = (
@@ -652,18 +731,18 @@ export default function App() {
     const drawX = (clientX - svgRect.left) * svgScale;
     const drawY = (clientY - svgRect.top) * svgScale;
 
-    if (drawMode !== 'mouse') {
-      if (drawMode === 'pencil' && currentDrawing) {
+    if (drawMode !== "mouse") {
+      if (drawMode === "pencil" && currentDrawing) {
         setCurrentDrawing((prev: any) => ({
           ...prev,
           points: [...prev.points, { x: drawX, y: drawY }],
         }));
-      } else if (drawMode === 'line' && currentDrawing) {
+      } else if (drawMode === "line" && currentDrawing) {
         setCurrentDrawing((prev: any) => ({
           ...prev,
           end: { x: drawX, y: drawY },
         }));
-      } else if (drawMode === 'eraser') {
+      } else if (drawMode === "eraser") {
         eraseAt(drawX, drawY);
       }
       return;
@@ -690,7 +769,7 @@ export default function App() {
     }
     setTrailCurrentAngle(angle);
 
-    if (target === 'minute') {
+    if (target === "minute") {
       const newMinute = Math.round(angle / 6) % 60;
       const currentMinute = totalMinutes % 60;
       let diff = newMinute - currentMinute;
@@ -708,7 +787,7 @@ export default function App() {
           });
         }
       }
-    } else if (target === 'hour') {
+    } else if (target === "hour") {
       if (settings.linked) {
         const newTime12h = Math.round(angle * 2);
         const currentTime12h = totalMinutes % 720;
@@ -735,7 +814,7 @@ export default function App() {
           });
         }
       }
-    } else if (target === 'second') {
+    } else if (target === "second") {
       const newSecond = Math.round(angle / 6) % 60;
       setSeconds(newSecond);
     }
@@ -745,7 +824,7 @@ export default function App() {
     setIsDragging(false);
     e.target.releasePointerCapture(e.pointerId);
 
-    if (drawMode !== 'mouse') {
+    if (drawMode !== "mouse") {
       if (currentDrawing) {
         setDrawings((prev) => [...prev, currentDrawing]);
         setCurrentDrawing(null);
@@ -768,18 +847,18 @@ export default function App() {
     if (!scaleSettings.showColorFill) return null;
     const sectors = [];
     const colors = [
-      '#fecaca',
-      '#fed7aa',
-      '#fef08a',
-      '#d9f99d',
-      '#bbf7d0',
-      '#a7f3d0',
-      '#99f6e4',
-      '#bae6fd',
-      '#bfdbfe',
-      '#ddd6fe',
-      '#fbcfe8',
-      '#fecdd3',
+      "#fecaca",
+      "#fed7aa",
+      "#fef08a",
+      "#d9f99d",
+      "#bbf7d0",
+      "#a7f3d0",
+      "#99f6e4",
+      "#bae6fd",
+      "#bfdbfe",
+      "#ddd6fe",
+      "#fbcfe8",
+      "#fecdd3",
     ];
     for (let i = 0; i < 12; i++) {
       const startAngle = ((i * 30 - 90) * Math.PI) / 180;
@@ -839,7 +918,7 @@ export default function App() {
           y1={y1}
           x2={x2}
           y2={y2}
-          stroke={isHour ? '#1e293b' : '#94a3b8'}
+          stroke={isHour ? "#1e293b" : "#94a3b8"}
           strokeWidth={isHour ? 4 : 2}
         />
       );
@@ -876,7 +955,7 @@ export default function App() {
   const renderHints = () => {
     if (!scaleSettings.showMinuteNumbers) return null;
     const hints = [];
-    const step = scaleSettings.minuteNumbersMode === 'by5' ? 5 : 1;
+    const step = scaleSettings.minuteNumbersMode === "by5" ? 5 : 1;
     for (let i = 0; i < 60; i += step) {
       const angle = (i * 6 * Math.PI) / 180;
       const r = 166;
@@ -888,9 +967,9 @@ export default function App() {
           key={`hint-${i}`}
           x={x}
           y={y + 1}
-          fontSize={isFive ? '16' : '13'}
-          fontWeight={isFive ? '900' : 'bold'}
-          fill={isFive ? '#3b82f6' : '#94a3b8'}
+          fontSize={isFive ? "16" : "13"}
+          fontWeight={isFive ? "900" : "bold"}
+          fill={isFive ? "#3b82f6" : "#94a3b8"}
           textAnchor="middle"
           dominantBaseline="middle"
         >
@@ -905,13 +984,13 @@ export default function App() {
     const allDrawings = [...drawings];
     if (currentDrawing) allDrawings.push(currentDrawing);
     return allDrawings.map((d) => {
-      if (d.type === 'pencil' && d.points.length > 0) {
+      if (d.type === "pencil" && d.points.length > 0) {
         const dPath =
           `M ${d.points[0].x} ${d.points[0].y} ` +
           d.points
             .slice(1)
             .map((p: any) => `L ${p.x} ${p.y}`)
-            .join(' ');
+            .join(" ");
         return (
           <path
             key={d.id}
@@ -924,7 +1003,7 @@ export default function App() {
           />
         );
       }
-      if (d.type === 'line') {
+      if (d.type === "line") {
         return (
           <line
             key={d.id}
@@ -945,15 +1024,15 @@ export default function App() {
   const btnToolClass = (active: boolean) =>
     `flex flex-col items-center justify-center flex-1 py-1 rounded-lg transition-all active:scale-95 font-bold text-[0.7rem] sm:text-[0.8rem] ${
       active
-        ? 'bg-[#d97706] text-white shadow-inner'
-        : 'bg-[#fcd34d] text-[#78350f] hover:bg-[#fbbf24]'
+        ? "bg-[#d97706] text-white shadow-inner"
+        : "bg-[#fcd34d] text-[#78350f] hover:bg-[#fbbf24]"
     }`;
 
   const tabBtnClass = (active: boolean, colorClass: string) =>
     `flex-1 py-1.5 sm:py-2 px-1 sm:px-2 rounded-lg font-bold transition-all text-[0.8rem] sm:text-[0.9rem] whitespace-nowrap ${
       active
         ? `bg-white shadow-sm ${colorClass}`
-        : 'text-slate-500 hover:text-slate-700'
+        : "text-slate-500 hover:text-slate-700"
     }`;
 
   const renderTargetTimeBlocks = (minutes: number, colorClass: string) => {
@@ -965,22 +1044,37 @@ export default function App() {
     const ampm = getDigitalTime(minutes, lang).ampm;
 
     return (
-      <div className="flex items-center justify-center space-x-2 sm:space-x-3 mt-1 sm:mt-2">
+      <div className="flex items-center justify-center space-x-2 sm:space-x-3 mt-1 sm:mt-2 relative">
         <span className={`text-xl sm:text-2xl font-black ${colorClass}`}>
           {ampm}
         </span>
+        {/* 時：紅色區塊 */}
         <div className="relative w-14 h-16 sm:w-[4.5rem] sm:h-20 shrink-0">
           <div className="absolute inset-0 bg-[#b3b3b3] rounded-[1rem] translate-x-[3px] translate-y-[3px]"></div>
           <div className="absolute inset-0 bg-[#fc6c65] rounded-[1rem] border-[3px] border-[#ffb2b2] flex items-center justify-center text-white text-[2rem] sm:text-[2.75rem] font-black tracking-tighter select-none">
-            {displayH.toString().padStart(2, '0')}
+            {displayH.toString().padStart(2, "0")}
           </div>
         </div>
+        {/* 分：藍色區塊 */}
         <div className="relative w-[3.8rem] h-16 sm:w-[5.5rem] sm:h-20 shrink-0">
           <div className="absolute inset-0 bg-[#b3b3b3] rounded-[1rem] translate-x-[3px] translate-y-[3px]"></div>
           <div className="absolute inset-0 bg-[#4ea9f5] rounded-[1rem] border-[3px] border-[#a8d3f6] flex items-center justify-center text-white text-[2rem] sm:text-[2.75rem] font-black tracking-widest select-none">
             {mTens}
             {mOnes}
           </div>
+          
+          {/* 目標時間的語音按鈕，緊貼在藍色區塊右邊 */}
+          <button 
+            onClick={() => speakTime(minutes)}
+            className={`absolute -right-12 sm:-right-16 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all shadow-sm border active:scale-95 ${
+              isDay 
+                ? "bg-white text-blue-500 border-slate-200 hover:bg-slate-50" 
+                : "bg-slate-700 text-blue-400 border-slate-600 hover:bg-slate-600"
+            }`}
+            title="語音提示"
+          >
+            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+          </button>
         </div>
       </div>
     );
@@ -1001,9 +1095,10 @@ export default function App() {
         {/* 左側：時鐘與互動區 */}
         <div
           className={`flex-1 p-4 sm:p-6 flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-1000 ${
-            isDay ? 'bg-sky-100' : 'bg-slate-800'
+            isDay ? "bg-sky-100" : "bg-slate-800"
           } border-b md:border-b-0 md:border-r border-slate-200`}
         >
+          {/* 左上角：日月與語言切換 */}
           <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-2 sm:gap-4 z-10">
             {isDay ? (
               <Sun className="w-8 h-8 sm:w-10 sm:h-10 text-amber-500 animate-[spin_30s_linear_infinite]" />
@@ -1014,11 +1109,11 @@ export default function App() {
               />
             )}
             <button
-              onClick={() => setLang((l) => (l === 'zh' ? 'en' : 'zh'))}
-              className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg font-bold text-xs sm:text-sm transition-all shadow-sm border backdrop-blur-sm active:scale-95 ${
+              onClick={() => setLang((l) => (l === "zh" ? "en" : "zh"))}
+              className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 py-1.5 rounded-lg font-bold text-xs sm:text-sm transition-all shadow-sm border backdrop-blur-sm active:scale-95 ${
                 isDay
-                  ? 'bg-white/60 text-slate-700 border-slate-200 hover:bg-white/90'
-                  : 'bg-slate-700/60 text-slate-200 border-slate-600 hover:bg-slate-600/90'
+                  ? "bg-white/60 text-slate-700 border-slate-200 hover:bg-white/90"
+                  : "bg-slate-700/60 text-slate-200 border-slate-600 hover:bg-slate-600/90"
               }`}
             >
               <Languages className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -1026,15 +1121,33 @@ export default function App() {
             </button>
           </div>
 
-          <div className="relative w-full max-w-[420px] aspect-square select-none">
+          {/* 右上角：鐘面即時語音播報（僅在非探索模式出現） */}
+          {(mode === 'step' || mode === 'practice') && (
+            <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center z-10 animate-in fade-in">
+              <button 
+                onClick={() => speakTime(totalMinutes)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md border backdrop-blur-sm active:scale-95 ${
+                  isDay 
+                    ? 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50' 
+                    : 'bg-slate-700 text-blue-400 border-slate-500 hover:bg-slate-600'
+                }`}
+                title={T[lang].readClock}
+              >
+                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline">{T[lang].readClock}</span>
+              </button>
+            </div>
+          )}
+
+          <div className="relative w-full max-w-[420px] aspect-square select-none mt-8 sm:mt-4">
             <svg
               viewBox="0 0 360 360"
               className={`w-full h-full touch-none drop-shadow-xl ${
-                drawMode === 'mouse'
+                drawMode === "mouse"
                   ? isDragging
-                    ? 'cursor-grabbing'
-                    : 'cursor-grab'
-                  : 'cursor-crosshair'
+                    ? "cursor-grabbing"
+                    : "cursor-grab"
+                  : "cursor-crosshair"
               }`}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
@@ -1128,10 +1241,10 @@ export default function App() {
 
           <div
             className={`mt-4 sm:mt-6 text-xs sm:text-sm font-bold flex items-center bg-white/60 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm ${
-              isDay ? 'text-sky-800' : 'text-slate-800'
+              isDay ? "text-sky-800" : "text-slate-800"
             }`}
           >
-            {drawMode === 'mouse' ? T[lang].hintMouse : T[lang].hintDraw}
+            {drawMode === "mouse" ? T[lang].hintMouse : T[lang].hintDraw}
           </div>
         </div>
 
@@ -1139,51 +1252,51 @@ export default function App() {
         <div className="w-full md:w-[420px] p-4 md:p-5 flex flex-col bg-white overflow-y-auto">
           <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4 shrink-0">
             <button
-              onClick={() => setMode('explore')}
+              onClick={() => setMode("explore")}
               className={`flex-1 min-w-[65px] py-1.5 sm:py-2 px-1 rounded-xl font-black text-[0.8rem] sm:text-[0.9rem] tracking-wider transition-all border-b-[4px] sm:border-b-[5px] active:translate-y-[4px] active:border-b-0 flex items-center justify-center ${
-                mode === 'explore'
-                  ? 'bg-[#3b82f6] text-white border-[#1d4ed8] shadow-sm'
-                  : 'bg-[#dbeafe] text-[#1e3a8a] border-[#93c5fd] hover:bg-[#bfdbfe]'
+                mode === "explore"
+                  ? "bg-[#3b82f6] text-white border-[#1d4ed8] shadow-sm"
+                  : "bg-[#dbeafe] text-[#1e3a8a] border-[#93c5fd] hover:bg-[#bfdbfe]"
               }`}
             >
               {T[lang].explore}
             </button>
             <button
-              onClick={() => setMode('step')}
+              onClick={() => setMode("step")}
               className={`flex-1 min-w-[65px] py-1.5 sm:py-2 px-1 rounded-xl font-black text-[0.8rem] sm:text-[0.9rem] tracking-wider transition-all border-b-[4px] sm:border-b-[5px] active:translate-y-[4px] active:border-b-0 flex items-center justify-center ${
-                mode === 'step'
-                  ? 'bg-[#facc15] text-[#422006] border-[#a16207] shadow-sm'
-                  : 'bg-[#fef08a] text-[#713f12] border-[#fde047] hover:bg-[#fde047]'
+                mode === "step"
+                  ? "bg-[#facc15] text-[#422006] border-[#a16207] shadow-sm"
+                  : "bg-[#fef08a] text-[#713f12] border-[#fde047] hover:bg-[#fde047]"
               }`}
             >
               {T[lang].step}
             </button>
             <button
-              onClick={() => setMode('practice')}
+              onClick={() => setMode("practice")}
               className={`flex-1 min-w-[65px] py-1.5 sm:py-2 px-1 rounded-xl font-black text-[0.8rem] sm:text-[0.9rem] tracking-wider transition-all border-b-[4px] sm:border-b-[5px] active:translate-y-[4px] active:border-b-0 flex items-center justify-center ${
-                mode === 'practice'
-                  ? 'bg-[#ef4444] text-white border-[#b91c1c] shadow-sm'
-                  : 'bg-[#fee2e2] text-[#7f1d1d] border-[#fca5a5] hover:bg-[#fecaca]'
+                mode === "practice"
+                  ? "bg-[#ef4444] text-white border-[#b91c1c] shadow-sm"
+                  : "bg-[#fee2e2] text-[#7f1d1d] border-[#fca5a5] hover:bg-[#fecaca]"
               }`}
             >
               {T[lang].practice}
             </button>
             <button
-              onClick={() => setMode('history')}
+              onClick={() => setMode("history")}
               className={`flex-1 min-w-[65px] py-1.5 sm:py-2 px-1 rounded-xl font-black text-[0.8rem] sm:text-[0.9rem] tracking-wider transition-all border-b-[4px] sm:border-b-[5px] active:translate-y-[4px] active:border-b-0 flex items-center justify-center ${
-                mode === 'history'
-                  ? 'bg-[#22c55e] text-white border-[#15803d] shadow-sm'
-                  : 'bg-[#dcfce7] text-[#14532d] border-[#86efac] hover:bg-[#bbf7d0]'
+                mode === "history"
+                  ? "bg-[#22c55e] text-white border-[#15803d] shadow-sm"
+                  : "bg-[#dcfce7] text-[#14532d] border-[#86efac] hover:bg-[#bbf7d0]"
               }`}
             >
               {T[lang].history}
             </button>
             <button
-              onClick={() => setMode('print')}
+              onClick={() => setMode("print")}
               className={`flex-1 min-w-[65px] py-1.5 sm:py-2 px-1 rounded-xl font-black text-[0.8rem] sm:text-[0.9rem] tracking-wider transition-all border-b-[4px] sm:border-b-[5px] active:translate-y-[4px] active:border-b-0 flex items-center justify-center ${
-                mode === 'print'
-                  ? 'bg-[#a855f7] text-white border-[#7e22ce] shadow-sm'
-                  : 'bg-[#f3e8ff] text-[#4c1d95] border-[#d8b4fe] hover:bg-[#e9d5ff]'
+                mode === "print"
+                  ? "bg-[#a855f7] text-white border-[#7e22ce] shadow-sm"
+                  : "bg-[#f3e8ff] text-[#4c1d95] border-[#d8b4fe] hover:bg-[#e9d5ff]"
               }`}
             >
               {T[lang].printTab}
@@ -1191,7 +1304,7 @@ export default function App() {
           </div>
 
           {/* 模式一：自由探索 */}
-          {mode === 'explore' && (
+          {mode === "explore" && (
             <div className="flex flex-col flex-1 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="mb-3 flex flex-col items-center">
                 <div className="flex items-center w-full mb-1.5 px-1">
@@ -1218,7 +1331,7 @@ export default function App() {
                       <div className="relative w-14 h-16 sm:w-20 sm:h-20">
                         <div className="absolute inset-0 bg-[#b3b3b3] rounded-[0.8rem] translate-x-[4px] translate-y-[4px]"></div>
                         <div className="absolute inset-0 bg-[#fc6c65] rounded-[0.8rem] border-[3px] sm:border-[4px] border-[#ffb2b2] flex items-center justify-center text-white text-[2rem] sm:text-[2.75rem] font-black tracking-tighter select-none">
-                          {displayH.toString().padStart(2, '0')}
+                          {displayH.toString().padStart(2, "0")}
                         </div>
                       </div>
                       <button
@@ -1270,14 +1383,28 @@ export default function App() {
                     <div className="flex flex-col items-center">
                       <div className="h-6 sm:h-7 mb-1"></div>
                       <div
-                        className="relative w-12 h-16 sm:w-16 sm:h-20 cursor-pointer group"
-                        onClick={() => adjustTime(720)}
-                        title="切換上下午"
+                        className="relative w-12 h-16 sm:w-16 sm:h-20 flex items-stretch gap-1"
+                        title="切換上下午與語音報時"
                       >
-                        <div className="absolute inset-0 bg-[#b3b3b3] rounded-[0.8rem] translate-x-[4px] translate-y-[4px]"></div>
-                        <div className="absolute inset-0 bg-[#6b6b6b] rounded-[0.8rem] border-[3px] sm:border-[4px] border-[#c4c4c4] flex items-center justify-center text-white text-sm sm:text-lg font-bold select-none group-active:bg-[#5a5a5a] transition-colors">
-                          {getDigitalTime(totalMinutes, lang).ampm}
-                        </div>
+                         <div 
+                           onClick={() => adjustTime(720)}
+                           className="flex-1 cursor-pointer group relative"
+                         >
+                            <div className="absolute inset-0 bg-[#b3b3b3] rounded-l-[0.8rem] translate-x-[4px] translate-y-[4px]"></div>
+                            <div className="absolute inset-0 bg-[#6b6b6b] rounded-l-[0.8rem] border-[3px] border-r-0 sm:border-[4px] sm:border-r-0 border-[#c4c4c4] flex items-center justify-center text-white text-sm sm:text-lg font-bold select-none group-active:bg-[#5a5a5a] transition-colors">
+                              {getDigitalTime(totalMinutes, lang).ampm}
+                            </div>
+                         </div>
+                         <div 
+                           onClick={() => speakTime()}
+                           className="w-8 sm:w-10 cursor-pointer group relative"
+                           title="語音報時"
+                         >
+                            <div className="absolute inset-0 bg-[#b3b3b3] rounded-r-[0.8rem] translate-x-[4px] translate-y-[4px]"></div>
+                            <div className="absolute inset-0 bg-[#3b82f6] rounded-r-[0.8rem] border-[3px] border-l-0 sm:border-[4px] sm:border-l-0 border-[#93c5fd] flex items-center justify-center text-white group-active:bg-[#2563eb] transition-colors">
+                              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 drop-shadow-md" />
+                            </div>
+                         </div>
                       </div>
                       <div className="h-6 sm:h-7 mt-1.5"></div>
                     </div>
@@ -1312,8 +1439,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] tracking-wider transition-all active:scale-95 ${
                           settings.linked
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].link}
@@ -1324,8 +1451,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] tracking-wider transition-all active:scale-95 ${
                           settings.trail
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].trail}
@@ -1338,8 +1465,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 ${
                           settings.showHour
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].hourHand}
@@ -1353,8 +1480,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 ${
                           settings.showMinute
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].minHand}
@@ -1368,8 +1495,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 ${
                           settings.showSecond
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].secHand}
@@ -1400,8 +1527,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 ${
                           scaleSettings.showTicks
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].ticks}
@@ -1415,8 +1542,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 ${
                           scaleSettings.showMinuteNumbers
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].numbers}
@@ -1430,8 +1557,8 @@ export default function App() {
                         }
                         className={`flex-1 py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 ${
                           scaleSettings.showColorFill
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].colors}
@@ -1447,8 +1574,8 @@ export default function App() {
                         }
                         className={`w-[4.5rem] sm:w-[5.5rem] py-1 sm:py-1.5 rounded-lg font-bold text-[0.85rem] sm:text-[1rem] transition-all active:scale-95 shrink-0 ${
                           scaleSettings.extendHands
-                            ? 'bg-[#f4c25b] text-[#603014]'
-                            : 'bg-[#cecece] text-[#717171]'
+                            ? "bg-[#f4c25b] text-[#603014]"
+                            : "bg-[#cecece] text-[#717171]"
                         }`}
                       >
                         {T[lang].extend}
@@ -1456,8 +1583,8 @@ export default function App() {
                       <div
                         className={`flex-1 flex items-center justify-center bg-[#f4c25b] rounded-lg px-2 py-0.5 transition-opacity relative ${
                           scaleSettings.showMinuteNumbers
-                            ? 'opacity-100'
-                            : 'opacity-40 grayscale pointer-events-none'
+                            ? "opacity-100"
+                            : "opacity-40 grayscale pointer-events-none"
                         }`}
                       >
                         <div className="absolute -top-[6px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[6px] border-l-transparent border-r-transparent border-b-[#f4c25b]"></div>
@@ -1466,11 +1593,11 @@ export default function App() {
                             type="radio"
                             name="minuteMode"
                             className="mr-1 w-3 h-3 accent-[#603014] cursor-pointer"
-                            checked={scaleSettings.minuteNumbersMode === 'by5'}
+                            checked={scaleSettings.minuteNumbersMode === "by5"}
                             onChange={() =>
                               setScaleSettings((s) => ({
                                 ...s,
-                                minuteNumbersMode: 'by5',
+                                minuteNumbersMode: "by5",
                               }))
                             }
                           />
@@ -1483,11 +1610,11 @@ export default function App() {
                             type="radio"
                             name="minuteMode"
                             className="mr-1 w-3 h-3 accent-[#603014] cursor-pointer"
-                            checked={scaleSettings.minuteNumbersMode === 'all'}
+                            checked={scaleSettings.minuteNumbersMode === "all"}
                             onChange={() =>
                               setScaleSettings((s) => ({
                                 ...s,
-                                minuteNumbersMode: 'all',
+                                minuteNumbersMode: "all",
                               }))
                             }
                           />
@@ -1503,7 +1630,7 @@ export default function App() {
 
               <div className="mb-3 flex flex-col items-center">
                 <div className="flex items-center justify-center w-full bg-white p-2.5 sm:p-3 rounded-[1.5rem] shadow-sm border border-slate-100 relative">
-                  {(drawMode === 'pencil' || drawMode === 'line') && (
+                  {(drawMode === "pencil" || drawMode === "line") && (
                     <div className="absolute -top-[2.75rem] left-[45%] bg-[#f4c25b] px-2 py-2 rounded-full flex gap-1.5 sm:gap-2 shadow-lg z-10 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-200 border-2 border-white">
                       {drawColors.map((c) => (
                         <button
@@ -1511,8 +1638,8 @@ export default function App() {
                           onClick={() => setDrawColor(c)}
                           className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full shadow-inner transition-transform active:scale-90 ${
                             drawColor === c
-                              ? 'scale-125 ring-2 ring-white ring-offset-1 ring-offset-[#f4c25b]'
-                              : 'hover:scale-110'
+                              ? "scale-125 ring-2 ring-white ring-offset-1 ring-offset-[#f4c25b]"
+                              : "hover:scale-110"
                           }`}
                           style={{ backgroundColor: c }}
                         />
@@ -1532,8 +1659,8 @@ export default function App() {
 
                   <div className="flex gap-1 sm:gap-1.5 w-full h-12 sm:h-14">
                     <button
-                      onClick={() => setDrawMode('mouse')}
-                      className={btnToolClass(drawMode === 'mouse')}
+                      onClick={() => setDrawMode("mouse")}
+                      className={btnToolClass(drawMode === "mouse")}
                     >
                       <MousePointer2 className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5" />
                       <span className="text-[0.65rem] sm:text-[0.75rem] -mt-0.5 whitespace-nowrap">
@@ -1541,8 +1668,8 @@ export default function App() {
                       </span>
                     </button>
                     <button
-                      onClick={() => setDrawMode('pencil')}
-                      className={btnToolClass(drawMode === 'pencil')}
+                      onClick={() => setDrawMode("pencil")}
+                      className={btnToolClass(drawMode === "pencil")}
                     >
                       <Pencil className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5" />
                       <span className="text-[0.65rem] sm:text-[0.75rem] -mt-0.5 whitespace-nowrap">
@@ -1550,8 +1677,8 @@ export default function App() {
                       </span>
                     </button>
                     <button
-                      onClick={() => setDrawMode('line')}
-                      className={btnToolClass(drawMode === 'line')}
+                      onClick={() => setDrawMode("line")}
+                      className={btnToolClass(drawMode === "line")}
                     >
                       <Minus className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 rotate-45" />
                       <span className="text-[0.65rem] sm:text-[0.75rem] -mt-0.5 whitespace-nowrap">
@@ -1559,8 +1686,8 @@ export default function App() {
                       </span>
                     </button>
                     <button
-                      onClick={() => setDrawMode('eraser')}
-                      className={btnToolClass(drawMode === 'eraser')}
+                      onClick={() => setDrawMode("eraser")}
+                      className={btnToolClass(drawMode === "eraser")}
                     >
                       <Eraser className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5" />
                       <span className="text-[0.65rem] sm:text-[0.75rem] -mt-0.5 whitespace-nowrap">
@@ -1570,7 +1697,7 @@ export default function App() {
                     <button
                       onClick={() => {
                         setDrawings([]);
-                        setDrawMode('mouse');
+                        setDrawMode("mouse");
                       }}
                       className={btnToolClass(false)}
                     >
@@ -1596,7 +1723,7 @@ export default function App() {
           )}
 
           {/* 模式二：逐步學習 */}
-          {mode === 'step' && (
+          {mode === "step" && (
             <div className="flex flex-col flex-1 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="flex justify-between items-center mb-4 px-1">
                 <h2 className="text-[1.2rem] sm:text-[1.35rem] font-black text-indigo-900 tracking-wider">
@@ -1606,54 +1733,54 @@ export default function App() {
 
               <div className="flex flex-col gap-2.5 sm:gap-3 mb-6">
                 <button
-                  onClick={() => setStepLevel('oclock')}
+                  onClick={() => setStepLevel("oclock")}
                   className={`py-2.5 sm:py-3 px-4 rounded-xl font-bold text-sm sm:text-base text-left transition-all border-l-[6px] flex items-center justify-between ${
-                    stepLevel === 'oclock'
-                      ? 'bg-indigo-50 border-indigo-500 text-indigo-800 shadow-sm'
-                      : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                    stepLevel === "oclock"
+                      ? "bg-indigo-50 border-indigo-500 text-indigo-800 shadow-sm"
+                      : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"
                   }`}
                 >
                   <span>{T[lang].step1}</span>
-                  {stepLevel === 'oclock' && (
+                  {stepLevel === "oclock" && (
                     <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
                   )}
                 </button>
                 <button
-                  onClick={() => setStepLevel('half')}
+                  onClick={() => setStepLevel("half")}
                   className={`py-2.5 sm:py-3 px-4 rounded-xl font-bold text-sm sm:text-base text-left transition-all border-l-[6px] flex items-center justify-between ${
-                    stepLevel === 'half'
-                      ? 'bg-indigo-50 border-indigo-500 text-indigo-800 shadow-sm'
-                      : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                    stepLevel === "half"
+                      ? "bg-indigo-50 border-indigo-500 text-indigo-800 shadow-sm"
+                      : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"
                   }`}
                 >
                   <span>{T[lang].step2}</span>
-                  {stepLevel === 'half' && (
+                  {stepLevel === "half" && (
                     <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
                   )}
                 </button>
                 <button
-                  onClick={() => setStepLevel('minute')}
+                  onClick={() => setStepLevel("minute")}
                   className={`py-2.5 sm:py-3 px-4 rounded-xl font-bold text-sm sm:text-base text-left transition-all border-l-[6px] flex items-center justify-between ${
-                    stepLevel === 'minute'
-                      ? 'bg-indigo-50 border-indigo-500 text-indigo-800 shadow-sm'
-                      : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                    stepLevel === "minute"
+                      ? "bg-indigo-50 border-indigo-500 text-indigo-800 shadow-sm"
+                      : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"
                   }`}
                 >
                   <span>{T[lang].step3}</span>
-                  {stepLevel === 'minute' && (
+                  {stepLevel === "minute" && (
                     <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
                   )}
                 </button>
 
                 {/* 幾點幾分 子選項列 */}
-                {stepLevel === 'minute' && (
+                {stepLevel === "minute" && (
                   <div className="flex justify-end gap-3 pl-4 pr-1 -mt-1 animate-in fade-in slide-in-from-top-2">
                     <label className="flex items-center cursor-pointer gap-2 bg-indigo-50/80 hover:bg-indigo-100 px-3 py-1.5 rounded-lg border border-indigo-200 transition-colors">
                       <input
                         type="radio"
                         name="stepMinMode"
-                        checked={stepMinMode === 'by5'}
-                        onChange={() => setStepMinMode('by5')}
+                        checked={stepMinMode === "by5"}
+                        onChange={() => setStepMinMode("by5")}
                         className="w-4 h-4 accent-indigo-600"
                       />
                       <span className="text-indigo-800 font-bold text-xs sm:text-sm">
@@ -1664,8 +1791,8 @@ export default function App() {
                       <input
                         type="radio"
                         name="stepMinMode"
-                        checked={stepMinMode === 'mixed'}
-                        onChange={() => setStepMinMode('mixed')}
+                        checked={stepMinMode === "mixed"}
+                        onChange={() => setStepMinMode("mixed")}
                         className="w-4 h-4 accent-indigo-600"
                       />
                       <span className="text-indigo-800 font-bold text-xs sm:text-sm">
@@ -1681,7 +1808,7 @@ export default function App() {
                   {T[lang].setTo}
                 </h3>
                 {targetMinutes !== null &&
-                  renderTargetTimeBlocks(targetMinutes, 'text-indigo-800')}
+                  renderTargetTimeBlocks(targetMinutes, "text-indigo-800")}
               </div>
 
               <div className="flex flex-col gap-3 sm:gap-4 w-full mt-auto">
@@ -1706,8 +1833,8 @@ export default function App() {
                   <div
                     className={`h-full flex items-center justify-center rounded-xl font-bold text-base sm:text-lg animate-in zoom-in duration-300 ${
                       feedback
-                        ? 'bg-emerald-100 text-emerald-700'
-                        : 'bg-rose-100 text-rose-700'
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-rose-100 text-rose-700"
                     }`}
                   >
                     {feedback ? (
@@ -1734,7 +1861,7 @@ export default function App() {
           )}
 
           {/* 模式三：挑戰模式 */}
-          {mode === 'practice' && (
+          {mode === "practice" && (
             <div className="flex flex-col flex-1 justify-center animate-in fade-in slide-in-from-left-4 duration-300">
               <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
                 <h2 className="text-[1.05rem] sm:text-[1.2rem] font-black text-emerald-900 tracking-wider">
@@ -1743,32 +1870,32 @@ export default function App() {
               </div>
               <div
                 className={`flex bg-slate-100 rounded-xl p-1 sm:p-1.5 ${
-                  practiceLevel === 'minute' ? 'mb-2 sm:mb-3' : 'mb-4 sm:mb-6'
+                  practiceLevel === "minute" ? "mb-2 sm:mb-3" : "mb-4 sm:mb-6"
                 } shadow-inner shrink-0 gap-1`}
               >
                 <button
-                  onClick={() => setPracticeLevel('oclock')}
+                  onClick={() => setPracticeLevel("oclock")}
                   className={tabBtnClass(
-                    practiceLevel === 'oclock',
-                    'text-emerald-600'
+                    practiceLevel === "oclock",
+                    "text-emerald-600"
                   )}
                 >
                   {T[lang].unit1}
                 </button>
                 <button
-                  onClick={() => setPracticeLevel('half')}
+                  onClick={() => setPracticeLevel("half")}
                   className={tabBtnClass(
-                    practiceLevel === 'half',
-                    'text-emerald-600'
+                    practiceLevel === "half",
+                    "text-emerald-600"
                   )}
                 >
                   {T[lang].unit2}
                 </button>
                 <button
-                  onClick={() => setPracticeLevel('minute')}
+                  onClick={() => setPracticeLevel("minute")}
                   className={tabBtnClass(
-                    practiceLevel === 'minute',
-                    'text-emerald-600'
+                    practiceLevel === "minute",
+                    "text-emerald-600"
                   )}
                 >
                   {T[lang].unit3}
@@ -1776,14 +1903,14 @@ export default function App() {
               </div>
 
               {/* 幾點幾分 子選項列 */}
-              {practiceLevel === 'minute' && (
+              {practiceLevel === "minute" && (
                 <div className="flex justify-center gap-3 mb-4 sm:mb-6 animate-in fade-in slide-in-from-top-2">
                   <label className="flex items-center cursor-pointer gap-2 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors">
                     <input
                       type="radio"
                       name="pracMinMode"
-                      checked={pracMinMode === 'by5'}
-                      onChange={() => setPracMinMode('by5')}
+                      checked={pracMinMode === "by5"}
+                      onChange={() => setPracMinMode("by5")}
                       className="w-4 h-4 accent-emerald-600"
                     />
                     <span className="text-emerald-800 font-bold text-xs sm:text-sm">
@@ -1794,8 +1921,8 @@ export default function App() {
                     <input
                       type="radio"
                       name="pracMinMode"
-                      checked={pracMinMode === 'mixed'}
-                      onChange={() => setPracMinMode('mixed')}
+                      checked={pracMinMode === "mixed"}
+                      onChange={() => setPracMinMode("mixed")}
                       className="w-4 h-4 accent-emerald-600"
                     />
                     <span className="text-emerald-800 font-bold text-xs sm:text-sm">
@@ -1810,7 +1937,7 @@ export default function App() {
                   {T[lang].setTo}
                 </h3>
                 {targetMinutes !== null &&
-                  renderTargetTimeBlocks(targetMinutes, 'text-emerald-800')}
+                  renderTargetTimeBlocks(targetMinutes, "text-emerald-800")}
               </div>
 
               <div className="flex flex-col gap-3 sm:gap-4 w-full mt-auto">
@@ -1835,8 +1962,8 @@ export default function App() {
                   <div
                     className={`h-full flex items-center justify-center rounded-xl font-bold text-base sm:text-lg animate-in zoom-in duration-300 ${
                       feedback
-                        ? 'bg-emerald-100 text-emerald-700'
-                        : 'bg-rose-100 text-rose-700'
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-rose-100 text-rose-700"
                     }`}
                   >
                     {feedback ? (
@@ -1863,7 +1990,7 @@ export default function App() {
           )}
 
           {/* 模式四：練習紀錄 */}
-          {mode === 'history' && (
+          {mode === "history" && (
             <div className="flex flex-col flex-1 animate-in fade-in slide-in-from-right-4 duration-300 h-full">
               <h2 className="text-[1.2rem] sm:text-[1.35rem] font-black text-slate-800 tracking-wider mb-3 sm:mb-4 px-1">
                 {T[lang].history}
@@ -1881,16 +2008,16 @@ export default function App() {
                   <div className="flex flex-col gap-2 sm:gap-3">
                     {records.map((record) => {
                       const modeStr =
-                        record.mode === 'step'
+                        record.mode === "step"
                           ? T[lang].stepTitle
                           : T[lang].practice;
-                      let levelStr = '';
-                      if (record.level === 'oclock') levelStr = T[lang].unit1;
-                      else if (record.level === 'half')
+                      let levelStr = "";
+                      if (record.level === "oclock") levelStr = T[lang].unit1;
+                      else if (record.level === "half")
                         levelStr = T[lang].unit2;
-                      else if (record.level === 'minute') {
+                      else if (record.level === "minute") {
                         levelStr = `${T[lang].unit3} (${
-                          record.subLevel === 'by5'
+                          record.subLevel === "by5"
                             ? T[lang].minBy5
                             : T[lang].minMixed
                         })`;
@@ -1910,16 +2037,16 @@ export default function App() {
                           key={record.id}
                           className={`flex items-center justify-between p-2.5 sm:p-4 rounded-xl border-l-4 shadow-sm bg-white animate-in slide-in-from-top-2 duration-200 ${
                             record.isCorrect
-                              ? 'border-l-emerald-500'
-                              : 'border-l-rose-500'
+                              ? "border-l-emerald-500"
+                              : "border-l-rose-500"
                           }`}
                         >
                           <div className="flex items-center gap-2 sm:gap-4">
                             <div
                               className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 ${
                                 record.isCorrect
-                                  ? 'bg-emerald-100 text-emerald-600'
-                                  : 'bg-rose-100 text-rose-600'
+                                  ? "bg-emerald-100 text-emerald-600"
+                                  : "bg-rose-100 text-rose-600"
                               }`}
                             >
                               {record.isCorrect ? (
@@ -1952,8 +2079,8 @@ export default function App() {
                           <div
                             className={`font-black text-xs sm:text-sm ${
                               record.isCorrect
-                                ? 'text-emerald-600'
-                                : 'text-rose-600'
+                                ? "text-emerald-600"
+                                : "text-rose-600"
                             }`}
                           >
                             {record.isCorrect
@@ -1980,7 +2107,7 @@ export default function App() {
           )}
 
           {/* 模式五：列印表單 */}
-          {mode === 'print' && (
+          {mode === "print" && (
             <div className="flex flex-col flex-1 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="flex justify-between items-center mb-4 px-1">
                 <h2 className="text-[1.2rem] sm:text-[1.35rem] font-black text-purple-900 tracking-wider">
@@ -1998,8 +2125,8 @@ export default function App() {
                     <input
                       type="checkbox"
                       className="w-4 h-4 sm:w-5 sm:h-5 accent-purple-600"
-                      checked={printUnits.includes('oclock')}
-                      onChange={() => togglePrintUnit('oclock')}
+                      checked={printUnits.includes("oclock")}
+                      onChange={() => togglePrintUnit("oclock")}
                     />
                     <span className="font-bold text-slate-700 text-sm sm:text-lg">
                       {T[lang].unit1}
@@ -2009,8 +2136,8 @@ export default function App() {
                     <input
                       type="checkbox"
                       className="w-4 h-4 sm:w-5 sm:h-5 accent-purple-600"
-                      checked={printUnits.includes('half')}
-                      onChange={() => togglePrintUnit('half')}
+                      checked={printUnits.includes("half")}
+                      onChange={() => togglePrintUnit("half")}
                     />
                     <span className="font-bold text-slate-700 text-sm sm:text-lg">
                       {T[lang].unit2}
@@ -2020,8 +2147,8 @@ export default function App() {
                     <input
                       type="checkbox"
                       className="w-4 h-4 sm:w-5 sm:h-5 accent-purple-600"
-                      checked={printUnits.includes('minute_by5')}
-                      onChange={() => togglePrintUnit('minute_by5')}
+                      checked={printUnits.includes("minute_by5")}
+                      onChange={() => togglePrintUnit("minute_by5")}
                     />
                     <span className="font-bold text-slate-700 text-sm sm:text-lg">
                       {T[lang].unit3_5}
@@ -2031,8 +2158,8 @@ export default function App() {
                     <input
                       type="checkbox"
                       className="w-4 h-4 sm:w-5 sm:h-5 accent-purple-600"
-                      checked={printUnits.includes('minute_mixed')}
-                      onChange={() => togglePrintUnit('minute_mixed')}
+                      checked={printUnits.includes("minute_mixed")}
+                      onChange={() => togglePrintUnit("minute_mixed")}
                     />
                     <span className="font-bold text-slate-700 text-sm sm:text-lg">
                       {T[lang].unit3_mixed}
@@ -2051,8 +2178,8 @@ export default function App() {
                     onClick={() => setPrintCount(6)}
                     className={`flex-1 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-lg transition-all ${
                       printCount === 6
-                        ? 'bg-purple-500 text-white shadow-md'
-                        : 'bg-white text-slate-600 border border-purple-200 hover:bg-purple-100'
+                        ? "bg-purple-500 text-white shadow-md"
+                        : "bg-white text-slate-600 border border-purple-200 hover:bg-purple-100"
                     }`}
                   >
                     {T[lang].q6}
@@ -2061,8 +2188,8 @@ export default function App() {
                     onClick={() => setPrintCount(9)}
                     className={`flex-1 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-lg transition-all ${
                       printCount === 9
-                        ? 'bg-purple-500 text-white shadow-md'
-                        : 'bg-white text-slate-600 border border-purple-200 hover:bg-purple-100'
+                        ? "bg-purple-500 text-white shadow-md"
+                        : "bg-white text-slate-600 border border-purple-200 hover:bg-purple-100"
                     }`}
                   >
                     {T[lang].q9}
@@ -2071,8 +2198,8 @@ export default function App() {
                     onClick={() => setPrintCount(12)}
                     className={`flex-1 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-lg transition-all ${
                       printCount === 12
-                        ? 'bg-purple-500 text-white shadow-md'
-                        : 'bg-white text-slate-600 border border-purple-200 hover:bg-purple-100'
+                        ? "bg-purple-500 text-white shadow-md"
+                        : "bg-white text-slate-600 border border-purple-200 hover:bg-purple-100"
                     }`}
                   >
                     {T[lang].q12}
